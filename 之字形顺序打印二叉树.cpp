@@ -1,94 +1,77 @@
-//C:\Users\½£ÄÏµÀ´ÌÊ·\OneDrive\Documents\ºóÌ¨¿ª·¢\ÌâÄ¿Ô´Âë
-
-#include <iostream>
 #include <algorithm>
-#include <vector>
 #include <deque>
+#include <functional>
+#include <iostream>
 #include <sstream>
-#include <unordered_set>
 #include <stack>
-#include<functional>
+#include <unordered_set>
+#include <vector>
 
 using namespace std;
 
-
 struct TreeNode {
-int val;
-struct TreeNode *left;
-struct TreeNode *right;
-TreeNode(int x) :
-val(x), left(NULL), right(NULL) {
-}
+  int val;
+  struct TreeNode *left;
+  struct TreeNode *right;
+  TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-class Solution 
-{
+class Solution {
 public:
-	vector<vector<int> > Print(TreeNode* pRoot);
+  vector<vector<int>> Print(TreeNode *pRoot);
 };
 
-vector<vector<int> > Solution::Print(TreeNode* pRoot)
-{
-	stack<TreeNode*> stk1, stk2;
-	vector<vector<int> > result;
-	int flag(0);
+vector<vector<int>> Solution::Print(TreeNode *pRoot) {
+  stack<TreeNode *> stk1, stk2;
+  vector<vector<int>> result;
+  int flag(0);
 
-	if (!pRoot)
-		return result;
-	
-	stk1.push(pRoot);
-	result.push_back(vector<int>());
-	result[flag++].push_back(stk1.top()->val);
+  if (!pRoot)
+    return result;
 
-	while (stk1.size() != 0 || stk2.size() != 0)
-	{
-		result.push_back(vector<int>());
-		if(flag%2)//´ÓÓÒÏò×ó
-			while (stk1.size())
-			{
-				if (stk1.top()->right)
-				{
-					stk2.push(stk1.top()->right);
-					result[flag].push_back(stk1.top()->right->val);
-				}
-				if (stk1.top()->left)
-				{
-					stk2.push(stk1.top()->left);
-					result[flag].push_back(stk1.top()->left->val);
-				}
-				stk1.pop();
-			}
-		else//´Ó×óÏòÓÒ
-			while (stk2.size())
-			{
-				if (stk2.top()->left)
-				{
-					stk1.push(stk2.top()->left);
-					result[flag].push_back(stk2.top()->left->val);
-				}
-				if (stk2.top()->right)
-				{
-					stk1.push(stk2.top()->right);
-					result[flag].push_back(stk2.top()->right->val);
-				}
-				stk2.pop();
-			}
-		flag++;
-	}
-	result.pop_back();
-	return result;
+  stk1.push(pRoot);
+  result.push_back(vector<int>());
+  result[flag++].push_back(stk1.top()->val);
+
+  while (stk1.size() != 0 || stk2.size() != 0) {
+    result.push_back(vector<int>());
+    if (flag % 2) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      while (stk1.size()) {
+        if (stk1.top()->right) {
+          stk2.push(stk1.top()->right);
+          result[flag].push_back(stk1.top()->right->val);
+        }
+        if (stk1.top()->left) {
+          stk2.push(stk1.top()->left);
+          result[flag].push_back(stk1.top()->left->val);
+        }
+        stk1.pop();
+      }
+    else //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      while (stk2.size()) {
+        if (stk2.top()->left) {
+          stk1.push(stk2.top()->left);
+          result[flag].push_back(stk2.top()->left->val);
+        }
+        if (stk2.top()->right) {
+          stk1.push(stk2.top()->right);
+          result[flag].push_back(stk2.top()->right->val);
+        }
+        stk2.pop();
+      }
+    flag++;
+  }
+  result.pop_back();
+  return result;
 }
 
-int main()
-{
-	Solution Sol;
+int main() {
+  Solution Sol;
 
-	TreeNode* Node = new TreeNode(1);
-	Node->left= new TreeNode(2);
-	Node->right = new TreeNode(3);
-	Sol.Print(Node);
-	
+  TreeNode *Node = new TreeNode(1);
+  Node->left = new TreeNode(2);
+  Node->right = new TreeNode(3);
+  Sol.Print(Node);
 
-
-	return 0;
+  return 0;
 }
